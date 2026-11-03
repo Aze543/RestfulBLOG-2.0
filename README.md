@@ -3,7 +3,7 @@
 
 A multi-user blog built with Flask, SQLAlchemy, and PostgreSQL. Visitors can read posts and comment, registered users can submit posts for review, and the admin approves or rejects them.
 
-#Homepage
+## Homepage
 <img align="center" width="80%" alt="Blog Home Page" src="https://github.com/user-attachments/assets/35773b22-3ab7-4f49-9c16-722b3cba4ebe" />
 
 ## Features
