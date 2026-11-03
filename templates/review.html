@@ -1,0 +1,60 @@
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+{% include "header.html" %}
+
+  <header class="masthead" style="background-image: url('{{ req.img_url }}')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>{{ req.title }}</h1>
+            <h2 class="subheading">{{ req.subtitle }}</h2>
+            <span class="meta">
+              Requested by {{ req.author.name if req.author else "Deleted user" }}
+              on {{ req.created_at.strftime("%B %d, %Y") }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+
+        <p><a href="{{ url_for('requests_bp.review_list') }}">&larr; Back to requests</a></p>
+
+        {{ req.body|safe }}
+
+        <hr>
+
+        {% if req.status == "pending" %}
+        <div class="clearfix mb-4">
+          <form method="post" action="{{ url_for('requests_bp.approve', req_id=req.id) }}">
+            {{ action_form.hidden_tag() }}
+            <button type="submit" class="btn btn-success">Approve &amp; Publish</button>
+          </form>
+        </div>
+
+        <form method="post" action="{{ url_for('requests_bp.reject', req_id=req.id) }}">
+          {{ reject_form.hidden_tag() }}
+          <div class="form-group">
+            <label for="admin_note">Reason for rejecting (optional)</label>
+            {{ reject_form.admin_note(class="form-control", rows=3) }}
+          </div>
+          <button type="submit" class="btn btn-danger">Reject</button>
+        </form>
+        {% else %}
+          <p class="text-muted">This request was already {{ req.status }}.</p>
+          {% if req.admin_note %}<p>Note: {{ req.admin_note }}</p>{% endif %}
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+
+{% include "footer.html" %}
+{% endblock %}

@@ -1,0 +1,58 @@
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+{% include "header.html" %}
+
+  <!-- Page Header -->
+  {% from "macros.html" import bg %}
+  <header class="masthead" style="{{ bg('contact-bg') }}">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="page-heading">
+            <h1>Contact</h1>
+            <span class="subheading">Have a question or feedback? Send me a message.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <p>Fill out the form below and I'll get back to you as soon as possible.</p>
+
+        {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+      </div>
+    </div>
+  </div>
+  <hr>
+
+  <!-- "Message sent" popup -->
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div id="sentPopup" style="position:fixed; inset:0; background:rgba(0,0,0,.5);
+         display:flex; align-items:center; justify-content:center; z-index:9999;">
+      <div style="background:#fff; border-radius:8px; padding:24px 28px;
+           max-width:420px; width:90%; text-align:center;
+           box-shadow:0 10px 30px rgba(0,0,0,.3);">
+        <h4 style="margin-top:0;">Message sent</h4>
+        <p>{{ messages[0] }}</p>
+        <button type="button" class="btn btn-primary"
+                onclick="document.getElementById('sentPopup').remove()">OK</button>
+      </div>
+    </div>
+    <script>
+      // also close when clicking the dark background
+      document.getElementById('sentPopup').addEventListener('click', function (e) {
+        if (e.target === this) this.remove();
+      });
+    </script>
+    {% endif %}
+  {% endwith %}
+
+{% include "footer.html" %}
+{% endblock %}

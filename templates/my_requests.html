@@ -1,0 +1,71 @@
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+{% include "header.html" %}
+
+{% from "macros.html" import bg %}
+<header class="masthead" style="{{ bg('my-request-bg') }}">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="page-heading">
+            <h1>My Requests</h1>
+            <span class="subheading">Track the posts you've submitted</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+
+        {% with messages = get_flashed_messages() %}
+          {% for message in messages %}
+            <div class="alert alert-success">{{ message }}</div>
+          {% endfor %}
+        {% endwith %}
+
+        {% if requests %}
+        <div style="overflow-x:auto;">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Submitted</th>
+                <th>Status</th>
+                <th>Note from admin</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for req in requests %}
+              <tr>
+                <td>{{ req.title }}</td>
+                <td>{{ req.created_at.strftime("%B %d, %Y") }}</td>
+                <td>
+                  <span class="badge badge-{{ 'success' if req.status == 'approved' else 'danger' if req.status == 'rejected' else 'secondary' }}">
+                    {{ req.status|capitalize }}
+                  </span>
+                </td>
+                <td>{{ req.admin_note or "" }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+          <p class="text-center text-muted my-5">You haven't submitted anything yet.</p>
+        {% endif %}
+
+        <div class="clearfix">
+          <a class="btn btn-primary float-right" href="{{ url_for('requests_bp.submit_post') }}">Submit a Post</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+{% include "footer.html" %}
+{% endblock %}

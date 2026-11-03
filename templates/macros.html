@@ -1,0 +1,6 @@
+{% macro bg(name) -%}
+background-image: url('{{ url_for('static', filename='img/' ~ name ~ '.jpg') }}');
+background-image: image-set(
+  url('{{ url_for('static', filename='img/' ~ name ~ '.webp') }}') type('image/webp'),
+  url('{{ url_for('static', filename='img/' ~ name ~ '.jpg') }}') type('image/jpeg'));
+{%- endmacro %}

@@ -1,0 +1,41 @@
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+{% include "header.html" %}
+
+{% from "macros.html" import bg %}
+<header class="masthead" style="{{ bg('request-history-bg') }}">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="page-heading">
+            <h1>Submit a Post</h1>
+            <span class="subheading">Your post will be reviewed by an admin before it's published</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+
+        {% with messages = get_flashed_messages() %}
+          {% for message in messages %}
+            <div class="alert alert-success">{{ message }}</div>
+          {% endfor %}
+        {% endwith %}
+
+        {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+
+        {{ ckeditor.load() }}
+        {{ ckeditor.config(name='body') }}
+
+      </div>
+    </div>
+  </div>
+
+{% include "footer.html" %}
+{% endblock %}

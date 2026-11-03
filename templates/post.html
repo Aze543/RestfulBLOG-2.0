@@ -1,0 +1,71 @@
+{% include "header.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+<style>
+  .cke_notifications_area {
+    display: none !important;
+  }
+  header.masthead {
+    min-height: 532px;
+    display: flex;
+    align-items: center;                /* vertically center the title block */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  header.masthead .container { width: 100%; }
+  header.masthead .post-heading,
+  header.masthead .site-heading,
+  header.masthead .page-heading {
+    padding: 80px 0 50px;               /* replaces the theme's big padding */
+  }
+</style>
+<!-- Page Header -->
+<header class="masthead" style="background-image: url('{{post.img_url}}'); ">
+	<div class="overlay"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-md-10 mx-auto">
+				<div class="post-heading">
+					<h1>{{post.title}}</h1>
+					<h2 class="subheading">{{post.subtitle}}</h2>
+					<span class="meta">Posted by
+              <a href="#">{{post.author}}</a>
+              on {{post.date}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>
+            {{post.body|safe}}
+          </p>
+           <div class="clearfix">
+               {% if admin: %}
+                <a class="btn btn-primary float-right" href="{{ url_for('posts.edit_post', post_id=post.id) }}">Edit Post</a>
+               <br><br><br><hr>
+               {% endif %}
+               {{ wtf.quick_form(form, novalidate=True) }}
+               {{ ckeditor.load() }}
+               {{ ckeditor.config(name='body') }}
+               <hr>
+               <h2>Comments: {{ num }}</h2>
+               {% for item in comments: %}
+               <div  class=".div-row" style=''>
+               <img class="com-img"  style='vertical-align:middle; margin-right: 5%;' src='{{ item.avatar }}'>
+                 <p style="width: 50%"><strong>{{ item.comment|safe }}</strong></p><p>-{{ item.author.name if item.author else item.name }}</p>
+               </div>
+               {% endfor %}
+        </div>
+          </div>
+      </div>
+    </div>
+  </article>
+
+  <hr>
+{% include "footer.html" %}

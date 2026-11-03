@@ -1,0 +1,94 @@
+{% include "header.html" %}
+
+  <!-- Page Header -->
+  {% from "macros.html" import bg %}
+  <header class="masthead" style="{{ bg('home-bg') }}">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="site-heading">
+            <h1>Aze's Blog</h1>
+            <span class="subheading">A collection of random blogs.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+
+        <!-- Posts -->
+        {% for post in all_posts %}
+        <div class="post-preview">
+          <a href="{{ url_for('posts.show_post', index=post.id) }}">
+            <h2 class="post-title">{{ post.title }}</h2>
+            <h3 class="post-subtitle">{{ post.subtitle }}</h3>
+          </a>
+          <p class="post-meta">Posted by {{ post.author }} on {{ post.date }}</p>
+
+          {% if admin %}
+          <form method="post"
+                action="{{ url_for('posts.delete_post', post_id=post.id) }}"
+                onsubmit="return confirm('Delete this post and its comments?');"
+                style="display:inline;">
+            {{ action_form.hidden_tag() }}
+            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+          </form>
+          {% endif %}
+        </div>
+        <hr>
+        {% else %}
+        <p class="text-center text-muted my-5">No posts yet.</p>
+        {% endfor %}
+
+        <!-- Pagination -->
+        {% if total_pages > 1 %}
+        <nav aria-label="Page navigation" class="my-4">
+          <ul class="pagination justify-content-center">
+
+            {% if page > 1 %}
+            <li class="page-item">
+              <a class="page-link" href="{{ url_for('posts.get_all_posts', page=page-1) }}">&laquo; Newer</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled"><span class="page-link">&laquo; Newer</span></li>
+            {% endif %}
+
+            {% for p in range(1, total_pages + 1) %}
+            <li class="page-item {{ 'active' if p == page }}">
+              <a class="page-link" href="{{ url_for('posts.get_all_posts', page=p) }}">{{ p }}</a>
+            </li>
+            {% endfor %}
+
+            {% if page < total_pages %}
+            <li class="page-item">
+              <a class="page-link" href="{{ url_for('posts.get_all_posts', page=page+1) }}">Older &raquo;</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled"><span class="page-link">Older &raquo;</span></li>
+            {% endif %}
+
+          </ul>
+        </nav>
+        {% endif %}
+
+        <!-- Action button -->
+        {% if admin %}
+        <div class="clearfix">
+          <a class="btn btn-primary float-right" href="{{ url_for('posts.add_post') }}">Create New Post</a>
+        </div>
+        {% elif logged %}
+        <div class="clearfix">
+          <a class="btn btn-primary float-right" href="{{ url_for('requests_bp.submit_post') }}">Submit a Post for Review</a>
+        </div>
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+
+{% include "footer.html" %}

@@ -1,0 +1,45 @@
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+{% include "header.html" %}
+
+{% from "macros.html" import bg %}
+<header class="masthead" style="{{ bg('profile-bg') }}">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="page-heading">
+            <h1>Your Profile</h1>
+            <span class="subheading">Change your name and picture</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+
+        {% with messages = get_flashed_messages() %}
+          {% for message in messages %}
+            <div class="alert alert-success">{{ message }}</div>
+          {% endfor %}
+        {% endwith %}
+
+        <div class="text-center mb-4">
+          <img src="{{ profile_user.avatar }}"
+               alt="Your avatar"
+               style="width:150px; height:150px; object-fit:cover; border-radius:50%;">
+          <p class="mt-2 text-muted">{{ profile_user.email }}</p>
+        </div>
+
+        {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+
+      </div>
+    </div>
+  </div>
+
+{% include "footer.html" %}
+{% endblock %}
