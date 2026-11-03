@@ -3,8 +3,8 @@
 
 A multi-user blog built with Flask, SQLAlchemy, and PostgreSQL. Visitors can read posts and comment, registered users can submit posts for review, and the admin approves or rejects them.
 
-![Home page]
-<img width="1680" height="1050" alt="Screenshot 2026-11-03 at 14 26 44" src="https://github.com/user-attachments/assets/35773b22-3ab7-4f49-9c16-722b3cba4ebe" />
+#Homepage
+<img align="center" width="80%" alt="Blog Home Page" src="https://github.com/user-attachments/assets/35773b22-3ab7-4f49-9c16-722b3cba4ebe" />
 
 ## Features
 
@@ -20,17 +20,13 @@ A multi-user blog built with Flask, SQLAlchemy, and PostgreSQL. Visitors can rea
 
 ## Screenshots
 
-| Home | Post page |
-|---|---|
-| ![Home](docs/screenshots/home.png) | ![Post](docs/screenshots/post.png) |
-
-| Profile | My Requests |
-|---|---|
-| ![Profile](docs/screenshots/profile.png) | ![My Requests](docs/screenshots/my-requests.png) |
-
-| Admin review list | Review a request |
-|---|---|
-| ![Requests](docs/screenshots/requests.png) | ![Review](docs/screenshots/review.png) |
+<p align="center">
+   <img width="32%" alt="Blog Post" src="https://github.com/user-attachments/assets/a7802008-e337-433c-85bb-6efd0fd7f63f" />
+   <img width="32%" alt="Blog User Requests" src="https://github.com/user-attachments/assets/4b8965f6-6134-4d16-873a-2dfdb3adfd71" />
+   <img width="32%" alt="Blog Profile" src="https://github.com/user-attachments/assets/e99f5bc4-7c0d-4223-b544-cebfb96eecd1" />
+   <img width="32%" alt="Blog Post History" src="https://github.com/user-attachments/assets/6f2ae60d-84cc-4da3-847a-50ccb44a22ce" />
+   <img width="32%" alt="Blog Add Post" src="https://github.com/user-attachments/assets/0f971465-eeaf-4ad6-b193-8942034a7c7e" />
+</p>
 
 ## Tech stack
 
