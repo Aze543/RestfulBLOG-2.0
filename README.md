@@ -1,8 +1,9 @@
+
 # Aze's Blog
 
 A multi-user blog built with Flask, SQLAlchemy, and PostgreSQL. Visitors can read posts and comment, registered users can submit posts for review, and the admin approves or rejects them.
 
-![Home page](docs/screenshots/home.png)
+![Home page](<img width="1680" height="1050" alt="Screenshot 2026-11-03 at 14 26 44" src="https://github.com/user-attachments/assets/35773b22-3ab7-4f49-9c16-722b3cba4ebe" />)
 
 ## Features
 
