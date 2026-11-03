@@ -180,3 +180,4 @@ static/raw_img/
 *.sqlite3
 *.sql
 backup
+.DS_Store
