@@ -3,11 +3,13 @@ import datetime as dt
 import smtplib
 from email.message import EmailMessage
 #own modules
-from components.config import SENDER_EMAIL, SENDER_EMAIL_PW, RECEIVER_EMAIL
+from components.config import SENDER_EMAIL, SENDER_EMAIL_PW, RECEIVER_EMAIL, RESEND_API_KEY
 from components.forms import ContactForm
 from components.auth import login_required
+import resend
 
 pages = Blueprint("pages", __name__)
+resend.api_key = RESEND_API_KEY
 
 @pages.route("/about")
 def about():
@@ -15,21 +17,19 @@ def about():
 
 
 def send_inquiry(form):
-    msg = EmailMessage()
-    msg["Subject"] = f"Blog inquiry from {form.name.data}"
-    msg["From"] = SENDER_EMAIL
-    msg["To"] = RECEIVER_EMAIL
-    msg["Reply-To"] = form.email.data
-    msg.set_content(
-        f"Name: {form.name.data}\n"
-        f"Email: {form.email.data}\n"
-        f"Date: {dt.datetime.now():%B %d, %Y}\n\n"
-        f"{form.message.data}\n"
-    )
-    with smtplib.SMTP("smtp.gmail.com", port=587) as connection:
-        connection.starttls()
-        connection.login(user=SENDER_EMAIL, password=SENDER_EMAIL_PW)
-        connection.send_message(msg)
+    resend.Emails.send({
+        "subject": f"Blog inquiry from {form.name.data}",
+        "from": SENDER_EMAIL,
+        "to": [RECEIVER_EMAIL],
+        "reply_to": form.email.data,
+        "text": (
+            f"Name: {form.name.data}\n"
+            f"Email: {form.email.data}\n"
+            f"Date: {dt.datetime.now():%B %d, %Y}\n\n"
+            f"{form.message.data}\n"
+        ),
+    })
+
 
 
 @pages.route("/contact", methods=["GET", "POST"])
